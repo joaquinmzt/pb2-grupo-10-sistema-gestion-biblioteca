@@ -35,7 +35,7 @@ public class Biblioteca {
 	}
 
 	public Boolean prestarLibro(Prestamo p) {
-		if(p.getLibro().getStock() != 0) {
+		if(p.getLibro().getStock() != 0 &&  p.getSocio().getLibros().size() < p.getSocio().getPlan().getCantidadMaximaDeLibrosSimultaneos()) {
 			p.getSocio().getLibros().add(p.getLibro());
 			p.getLibro().setStock(p.getLibro().getStock() - 1);
 			return this.prestamos.add(p);

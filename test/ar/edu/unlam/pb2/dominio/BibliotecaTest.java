@@ -49,7 +49,7 @@ public class BibliotecaTest {
 
 		String nombre2 = "Maria";
 		Integer dni2 = 22333444;
-		Persona socioPleno1 = new Persona(nombre, dni, planPleno);
+		Persona socioPleno1 = new Persona(nombre2, dni2, planPleno);
 		assertFalse(biblioteca.agregarSocio(socioPleno1));
 
 	}
@@ -94,38 +94,84 @@ public class BibliotecaTest {
 		LocalDate fechaDePrestamo = LocalDate.of(2025, 10, 1);
 
 		Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
-		
+
 		assertTrue(biblioteca.prestarLibro(prestamo));
-		
+
 		LocalDate fechaDeseada = LocalDate.of(2025, 11, 1);
 		LocalDate fechaObtenida = prestamo.getFechaDeDevolucion();
 		assertEquals(fechaDeseada, fechaObtenida);
 	}
-	
+
 	@Test
 	public void dadoQueExisteUnaBibliotecaYUnSocioAdherenteConunLibroNoPuedePedirPrestadoOtro() {
 		String nombre = "Jose";
 		Integer dni = 11000222;
 		Persona socioAdherente1 = new Persona(nombre, dni, planAdherente);
-		
+
 		assertTrue(biblioteca.agregarSocio(socioAdherente1));
-		
+
 		String titulo = "El Fin de la Infancia";
 		TipoDeLibro tipo = TipoDeLibro.NOVELA;
 		Integer stock = 5;
 		Libro libro1 = new Libro(titulo, tipo, stock);
-		
+
 		assertTrue(biblioteca.agregarLibro(libro1));
-		
+
 		LocalDate fechaDePrestamo = LocalDate.of(2025, 10, 1);
-		
+
 		Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
-		
+
 		assertTrue(biblioteca.prestarLibro(prestamo));
-		
+
+		String titulo2 = "Hellboy";
+		TipoDeLibro tipo2 = TipoDeLibro.COMIC;
+		Integer stock2 = 10;
+		Libro libro2 = new Libro(titulo2, tipo2, stock2);
+
+		assertTrue(biblioteca.agregarLibro(libro2));
+
+		Prestamo prestamo2 = new Prestamo(socioAdherente1, libro2, fechaDePrestamo);
+		assertFalse(biblioteca.prestarLibro(prestamo2));
+	}
+
+	@Test
+	public void dadoQueExisteUnaBibliotecaYUnLibroSinStockNoEsPosiblePrestarlo() {
+		String nombre = "Jose";
+		Integer dni = 11000222;
+		Persona socioAdherente1 = new Persona(nombre, dni, planAdherente);
+
+		assertTrue(biblioteca.agregarSocio(socioAdherente1));
+
+		String titulo = "El Fin de la Infancia";
+		TipoDeLibro tipo = TipoDeLibro.NOVELA;
+		Integer stock = 0;
+		Libro libro1 = new Libro(titulo, tipo, stock);
+
+		assertTrue(biblioteca.agregarLibro(libro1));
+
+		LocalDate fechaDePrestamo = LocalDate.of(2025, 10, 1);
+
+		Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
+		assertFalse(biblioteca.prestarLibro(prestamo));
+	}
+	
+	@Test
+	public void dadoQueExisteUnaBibliotecaYUnSocioQueRealizoUnPrestamoElMismoPuedeDevolverlo() {
 		
 	}
 	
+	@Test
+	public void dadoQueExisteUnaBibliotecaYUnSocioElMismoNoPuedeDevolverUnLibroQueNoTiene() {
+		
+	}
 	
-
+	@Test
+	public void dadoQueExisteUnSocioConUnPlanAdherenteSePuedeCalcularLaCuotaQueVaAPagar() {
+		
+	}
+	
+	@Test
+	public void dadoQueExisteUnSocioConUnPlanPlenoSePuedeCalcularLaCuotaQueVaAPagar() {
+		
+	}
 }

@@ -65,5 +65,4 @@ public class Persona {
 		Persona other = (Persona) obj;
 		return Objects.equals(dni, other.dni);
 	}
-
 }

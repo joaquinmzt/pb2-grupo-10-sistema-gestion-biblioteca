@@ -4,5 +4,6 @@ public class PlanAdherente extends Plan {
 
 	public PlanAdherente(Double precioBase) {
 		super(precioBase);
+		this.setCantidadMaximaDeLibrosSimultaneos(1);
 	}
 }
