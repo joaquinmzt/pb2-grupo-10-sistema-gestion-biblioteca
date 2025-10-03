@@ -13,6 +13,7 @@ public class Persona {
 
 	public Persona(String nombre, Integer dni, Plan plan) {
 		this.nombre = nombre;
+		this.dni = dni;
 		this.plan = plan;
 		this.libros = new ArrayList<>();
 	}

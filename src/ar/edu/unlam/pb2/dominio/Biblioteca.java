@@ -30,8 +30,12 @@ public class Biblioteca {
 		return this.libros.add(libro);
 	}
 
-	public boolean agregarSocio(Persona persona) {
+	public Boolean agregarSocio(Persona persona) {
 		return this.socios.add(persona);
+	}
+	
+	public Set<Persona> getSocios() {
+		return socios;
 	}
 
 	public Boolean prestarLibro(Prestamo p) {

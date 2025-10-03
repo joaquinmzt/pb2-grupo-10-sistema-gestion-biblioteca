@@ -6,4 +6,9 @@ public class PlanAdherente extends Plan {
 		super(precioBase);
 		this.setCantidadMaximaDeLibrosSimultaneos(1);
 	}
+
+	@Override
+	public String toString() {
+		return "Adherente; Precio Base: $" + getPrecioBase();
+	}
 }

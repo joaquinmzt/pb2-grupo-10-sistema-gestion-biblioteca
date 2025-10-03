@@ -6,4 +6,11 @@ public class PlanPleno extends Plan {
 		super(precioBase);
 		this.setCantidadMaximaDeLibrosSimultaneos(2);
 	}
+	
+	@Override
+	public String toString() {
+		return "Pleno; Precio Base: $" + getPrecioBase();
+	}
+	
+	
 }
