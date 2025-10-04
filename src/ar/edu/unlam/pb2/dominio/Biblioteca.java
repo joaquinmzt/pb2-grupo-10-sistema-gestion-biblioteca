@@ -53,6 +53,7 @@ public class Biblioteca {
 				&& p.getSocio().getLibros().size() < p.getSocio().getPlan().getCantidadMaximaDeLibrosSimultaneos()) {
 			p.getSocio().getLibros().add(p.getLibro());
 			p.getLibro().setStock(p.getLibro().getStock() - 1);
+			p.getSocio().setContadorPrestamos(p.getSocio().getContadorPrestamos() + 1);
 			return this.prestamos.add(p);
 		}
 		return false;
@@ -60,8 +61,12 @@ public class Biblioteca {
 
 	public boolean devolverLibro(Prestamo prestamo, LocalDate fechaDeDevolucion) {
 		if(fechaDeDevolucion.isBefore(prestamo.getFechaDeDevolucion())) {
+			prestamo.getSocio().getLibros().remove(prestamo.getLibro());
+			prestamo.getLibro().setStock(prestamo.getLibro().getStock() + 1);
 			return this.prestamos.remove(prestamo);
 		}
+		prestamo.getSocio().getLibros().remove(prestamo.getLibro());
+		prestamo.getLibro().setStock(prestamo.getLibro().getStock() + 1);
 		this.prestamos.remove(prestamo);
 		return false;
 	}
