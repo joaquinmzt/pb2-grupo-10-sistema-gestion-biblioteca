@@ -19,6 +19,4 @@ public class PlanPleno extends Plan implements ICalculable{
 		}
 		return this.getPrecioBase();
 	}
-	
-	
 }

@@ -23,5 +23,4 @@ public abstract class Plan implements ICalculable {
 	public void setCantidadMaximaDeLibrosSimultaneos(Integer cantidadMaximaDeLibrosSimultaneos) {
 		this.cantidadMaximaDeLibrosSimultaneos = cantidadMaximaDeLibrosSimultaneos;
 	}
-
 }

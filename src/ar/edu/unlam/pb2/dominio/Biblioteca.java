@@ -47,6 +47,33 @@ public class Biblioteca {
 	public void setPrestamos(List<Prestamo> prestamos) {
 		this.prestamos = prestamos;
 	}
+	
+	public Persona buscarSocioPorDni(Integer dni) {
+		for(Persona p : this.socios) {
+			if(p.getDni().equals(dni)) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	public Libro buscarLibroPorNombre(String nombre) {
+		for(Libro l : this.libros) {
+			if(l.getTitulo().equalsIgnoreCase(nombre)) {
+				return l;
+			}
+		}
+		return null;
+	}
+	
+	public Prestamo buscarPrestamoPorSocioYLibro(Persona socio, Libro libro) {
+		for(Prestamo p : this.prestamos) {
+			if(p.getSocio().equals(socio) && p.getLibro().equals(libro)) {
+				return p;
+			}
+		}
+		return null;
+	}
 
 	public Boolean prestarLibro(Prestamo p) {
 		if (p.getLibro().getStock() != 0

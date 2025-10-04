@@ -35,5 +35,4 @@ public class Libro {
 	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
-
 }
