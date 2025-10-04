@@ -154,9 +154,9 @@ public class BibliotecaTest {
 		Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
 		assertFalse(biblioteca.prestarLibro(prestamo));
 	}
-	
+
 	@Test
-	public void dadoQueExisteUnaBibliotecaYUnSocioQueRealizoUnPrestamoElMismoPuedeDevolverloEnFechaCorrecta() {
+	public void dadoQueExisteUnaBibliotecaYUnSocioQueRealizoUnPrestamoElMismoDevuelveElLibroDentroDeLaFechaLimite() {
 		String nombre = "Jose";
 		Integer dni = 11000222;
 		Persona socioAdherente1 = new Persona(nombre, dni, planAdherente);
@@ -170,21 +170,46 @@ public class BibliotecaTest {
 
 		biblioteca.agregarLibro(libro1);
 
-		LocalDate fechaDePrestamo = LocalDate.now().minusDays(2);
+		LocalDate fechaDePrestamo = LocalDate.of(2025, 10, 1);
 
 		Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
 
+		LocalDate fechaDeDevolucion = LocalDate.of(2025, 10, 15);
+
 		biblioteca.prestarLibro(prestamo);
-		
-		double penalizacion = biblioteca.devolverLibro(prestamo);
-		
-		assertEquals(0, penalizacion, 0);
-		
-		
+
+		assertEquals(1, biblioteca.getPrestamos().size());
+		assertTrue(biblioteca.devolverLibro(prestamo, fechaDeDevolucion));
+		assertEquals(0, biblioteca.getPrestamos().size());
 	}
-	
+
+	/*
+	 * @Test public void
+	 * dadoQueExisteUnaBibliotecaYUnSocioQueRealizoUnPrestamoElMismoPuedeDevolverloEnFechaCorrecta
+	 * () { String nombre = "Jose"; Integer dni = 11000222; Persona socioAdherente1
+	 * = new Persona(nombre, dni, planAdherente);
+	 * 
+	 * biblioteca.agregarSocio(socioAdherente1);
+	 * 
+	 * String titulo = "El Fin de la Infancia"; TipoDeLibro tipo =
+	 * TipoDeLibro.NOVELA; Integer stock = 5; Libro libro1 = new Libro(titulo, tipo,
+	 * stock);
+	 * 
+	 * biblioteca.agregarLibro(libro1);
+	 * 
+	 * LocalDate fechaDePrestamo = LocalDate.of(2025, 10, 1);
+	 * 
+	 * Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
+	 * 
+	 * biblioteca.prestarLibro(prestamo);
+	 * 
+	 * double penalizacion = biblioteca.devolverLibro(prestamo);
+	 * 
+	 * assertEquals(0, penalizacion, 0); }
+	 */
+
 	@Test
-	public void dadoQueExisteUnaBibliotecaYUnSocioQueRealizoUnPrestamoElMismoPuedeDevolverloConPenalizacion() {
+	public void dadoQueExisteUnaBibliotecaYUnSocioQueRealizoUnPrestamoElMismoDevuelveElLibroFueraDeLaFechaLimiteYElMetodoDevuelveFalsePeroElLibroYaNoEstaEnElArray() {
 		String nombre = "Jose";
 		Integer dni = 11000222;
 		Persona socioAdherente1 = new Persona(nombre, dni, planAdherente);
@@ -192,64 +217,82 @@ public class BibliotecaTest {
 		biblioteca.agregarSocio(socioAdherente1);
 
 		String titulo = "El Fin de la Infancia";
-		TipoDeLibro tipo = TipoDeLibro.COMIC;
+		TipoDeLibro tipo = TipoDeLibro.NOVELA;
 		Integer stock = 5;
 		Libro libro1 = new Libro(titulo, tipo, stock);
 
 		biblioteca.agregarLibro(libro1);
 
-		LocalDate fechaDePrestamo = LocalDate.now().minusDays(20);
+		LocalDate fechaDePrestamo = LocalDate.of(2025, 10, 1);
 
 		Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
+
+		LocalDate fechaDeDevolucion = LocalDate.of(2025, 11, 5);
 
 		biblioteca.prestarLibro(prestamo);
-		
-		double penalizacion = biblioteca.devolverLibro(prestamo);
-		
-		assertEquals(600, penalizacion, 0);
-		
+
+		assertEquals(1, biblioteca.getPrestamos().size());
+		assertFalse(biblioteca.devolverLibro(prestamo, fechaDeDevolucion));
+		assertEquals(0, biblioteca.getPrestamos().size());
 	}
-		
-	@Test
-	public void dadoQueExisteUnaBibliotecaYUnSocioQueRealizoUnPrestamoElMismoNoSePudoDevolver() {
-		String nombre = "Jose";
-		Integer dni = 11000222;
-		Persona socioAdherente1 = new Persona(nombre, dni, planAdherente);
 
-		biblioteca.agregarSocio(socioAdherente1);
+	/*
+	 * @Test public void
+	 * dadoQueExisteUnaBibliotecaYUnSocioQueRealizoUnPrestamoElMismoPuedeDevolverloConPenalizacion
+	 * () { String nombre = "Jose"; Integer dni = 11000222; Persona socioAdherente1
+	 * = new Persona(nombre, dni, planAdherente);
+	 * 
+	 * biblioteca.agregarSocio(socioAdherente1);
+	 * 
+	 * String titulo = "El Fin de la Infancia"; TipoDeLibro tipo =
+	 * TipoDeLibro.COMIC; Integer stock = 5; Libro libro1 = new Libro(titulo, tipo,
+	 * stock);
+	 * 
+	 * biblioteca.agregarLibro(libro1);
+	 * 
+	 * LocalDate fechaDePrestamo = LocalDate.now().minusDays(20);
+	 * 
+	 * Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
+	 * 
+	 * biblioteca.prestarLibro(prestamo);
+	 * 
+	 * double penalizacion = biblioteca.devolverLibro(prestamo);
+	 * 
+	 * assertEquals(600, penalizacion, 0); }
+	 */
 
-		String titulo = "El Fin de la Infancia";
-		TipoDeLibro tipo = TipoDeLibro.COMIC;
-		Integer stock = 5;
-		Libro libro1 = new Libro(titulo, tipo, stock);
+	/*
+	 * @Test public void
+	 * dadoQueExisteUnaBibliotecaYUnSocioQueRealizoUnPrestamoElMismoNoSePudoDevolver
+	 * () { String nombre = "Jose"; Integer dni = 11000222; Persona socioAdherente1
+	 * = new Persona(nombre, dni, planAdherente);
+	 * 
+	 * biblioteca.agregarSocio(socioAdherente1);
+	 * 
+	 * String titulo = "El Fin de la Infancia"; TipoDeLibro tipo =
+	 * TipoDeLibro.COMIC; Integer stock = 5; Libro libro1 = new Libro(titulo, tipo,
+	 * stock);
+	 * 
+	 * biblioteca.agregarLibro(libro1);
+	 * 
+	 * LocalDate fechaDePrestamo = LocalDate.now().minusDays(20);
+	 * 
+	 * Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
+	 * 
+	 * //biblioteca.prestarLibro(prestamo);
+	 * 
+	 * double penalizacion = biblioteca.devolverLibro(prestamo);
+	 * 
+	 * assertEquals(-1, penalizacion, 0); }
+	 */
 
-		biblioteca.agregarLibro(libro1);
-
-		LocalDate fechaDePrestamo = LocalDate.now().minusDays(20);
-
-		Prestamo prestamo = new Prestamo(socioAdherente1, libro1, fechaDePrestamo);
-
-		//biblioteca.prestarLibro(prestamo);
-		
-		double penalizacion = biblioteca.devolverLibro(prestamo);
-		
-		assertEquals(-1, penalizacion, 0);
-		
-	}
-	
-	
-	@Test
-	public void dadoQueExisteUnaBibliotecaYUnSocioElMismoNoPuedeDevolverUnLibroQueNoTiene() {
-		
-	}
-	
 	@Test
 	public void dadoQueExisteUnSocioConUnPlanAdherenteSePuedeCalcularLaCuotaQueVaAPagar() {
-		
+
 	}
-	
+
 	@Test
 	public void dadoQueExisteUnSocioConUnPlanPlenoSePuedeCalcularLaCuotaQueVaAPagar() {
-		
+
 	}
 }

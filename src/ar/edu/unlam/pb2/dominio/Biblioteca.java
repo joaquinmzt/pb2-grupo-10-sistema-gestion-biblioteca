@@ -40,6 +40,14 @@ public class Biblioteca {
 		return socios;
 	}
 
+	public List<Prestamo> getPrestamos() {
+		return prestamos;
+	}
+
+	public void setPrestamos(List<Prestamo> prestamos) {
+		this.prestamos = prestamos;
+	}
+
 	public Boolean prestarLibro(Prestamo p) {
 		if (p.getLibro().getStock() != 0
 				&& p.getSocio().getLibros().size() < p.getSocio().getPlan().getCantidadMaximaDeLibrosSimultaneos()) {
@@ -50,7 +58,15 @@ public class Biblioteca {
 		return false;
 	}
 
-	public double devolverLibro(Prestamo prestamo) {
+	public boolean devolverLibro(Prestamo prestamo, LocalDate fechaDeDevolucion) {
+		if(fechaDeDevolucion.isBefore(prestamo.getFechaDeDevolucion())) {
+			return this.prestamos.remove(prestamo);
+		}
+		this.prestamos.remove(prestamo);
+		return false;
+	}
+
+	/* public double devolverLibro(Prestamo prestamo) {
 		double penalizacion = 0;
 		if (prestamo.getFechaDeDevolucion().isBefore(LocalDate.now())) {
 			Integer cantidadDiasPenalizacion = (int) ChronoUnit.DAYS.between(prestamo.getFechaDeDevolucion(),
@@ -67,5 +83,5 @@ public class Biblioteca {
 			return -1;
 		}
 
-	}
+	} */
 }
