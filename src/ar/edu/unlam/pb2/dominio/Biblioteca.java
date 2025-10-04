@@ -60,33 +60,17 @@ public class Biblioteca {
 	}
 
 	public boolean devolverLibro(Prestamo prestamo, LocalDate fechaDeDevolucion) {
-		if(fechaDeDevolucion.isBefore(prestamo.getFechaDeDevolucion())) {
-			prestamo.getSocio().getLibros().remove(prestamo.getLibro());
-			prestamo.getLibro().setStock(prestamo.getLibro().getStock() + 1);
-			return this.prestamos.remove(prestamo);
+		if (fechaDeDevolucion.isAfter(prestamo.getFechaDeDevolucion())) {
+			Long diasDeRetraso = ChronoUnit.DAYS.between(prestamo.getFechaDeDevolucion(), fechaDeDevolucion);
+			prestamo.getSocio().setMontoPagarPenalizacion(diasDeRetraso * this.PENALIZACION_POR_DIA);
 		}
+
 		prestamo.getSocio().getLibros().remove(prestamo.getLibro());
 		prestamo.getLibro().setStock(prestamo.getLibro().getStock() + 1);
-		this.prestamos.remove(prestamo);
-		return false;
+		return this.prestamos.remove(prestamo);
 	}
 
-	/* public double devolverLibro(Prestamo prestamo) {
-		double penalizacion = 0;
-		if (prestamo.getFechaDeDevolucion().isBefore(LocalDate.now())) {
-			Integer cantidadDiasPenalizacion = (int) ChronoUnit.DAYS.between(prestamo.getFechaDeDevolucion(),
-					LocalDate.now());
-			penalizacion = cantidadDiasPenalizacion * PENALIZACION_POR_DIA;
-		}
-		if (this.prestamos.remove(prestamo)) {
-			if (penalizacion <= 0) {
-				return 0;
-			} else {
-				return penalizacion;
-			}
-		} else {
-			return -1;
-		}
-
-	} */
+	public Double calcularCuotaAPagarDeUnSocio(Persona socio) {
+		return socio.getPlan().calcularCuota(socio) + socio.getMontoPagarPenalizacion();
+	}
 }

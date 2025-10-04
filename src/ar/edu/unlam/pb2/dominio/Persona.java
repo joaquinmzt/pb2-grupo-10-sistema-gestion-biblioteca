@@ -11,6 +11,7 @@ public class Persona {
 	private Plan plan;
 	private List<Libro> libros;
 	public Integer contadorPrestamos;
+	private Double montoPagarPenalizacion;
 
 	public Persona(String nombre, Integer dni, Plan plan) {
 		this.nombre = nombre;
@@ -18,6 +19,15 @@ public class Persona {
 		this.plan = plan;
 		this.libros = new ArrayList<>();
 		this.contadorPrestamos = 0;
+		this.montoPagarPenalizacion = 0.0;
+	}
+
+	public Double getMontoPagarPenalizacion() {
+		return montoPagarPenalizacion;
+	}
+
+	public void setMontoPagarPenalizacion(Double montoPagarPenalizacion) {
+		this.montoPagarPenalizacion = montoPagarPenalizacion;
 	}
 
 	public String getNombre() {
