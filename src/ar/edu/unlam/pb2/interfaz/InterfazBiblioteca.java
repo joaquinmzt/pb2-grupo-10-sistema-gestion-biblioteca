@@ -152,8 +152,11 @@ public class InterfazBiblioteca {
 			fechaDeDevolucion = ingresarFecha("Fecha en la que se realiza la devolucion del prestamo: ");
 			
 			if(prestamo != null) {
-				biblioteca.devolverLibro(prestamo, fechaDeDevolucion);
-				mostrarPorPantalla("El libro fue devuelto");
+				if(biblioteca.devolverLibro(prestamo, fechaDeDevolucion)) {
+					mostrarPorPantalla("El libro fue devuelto");
+				} else {
+					mostrarPorPantalla("La fecha de devolucion no puede ser anterior a la fecha en la que se presto el libro");
+				}
 			} else {
 				mostrarPorPantalla("No se pudo encontrar ese prestamo");
 			}

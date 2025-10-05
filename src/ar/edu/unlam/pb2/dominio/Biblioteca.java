@@ -86,7 +86,11 @@ public class Biblioteca {
 		return false;
 	}
 
-	public boolean devolverLibro(Prestamo prestamo, LocalDate fechaDeDevolucion) {
+	public Boolean devolverLibro(Prestamo prestamo, LocalDate fechaDeDevolucion) {
+		if(fechaDeDevolucion.isBefore(prestamo.getFechaDePrestamo())) {
+			return false;
+		}
+		
 		if (fechaDeDevolucion.isAfter(prestamo.getFechaDeDevolucion())) {
 			Long diasDeRetraso = ChronoUnit.DAYS.between(prestamo.getFechaDeDevolucion(), fechaDeDevolucion);
 			prestamo.getSocio().setMontoPagarPenalizacion(diasDeRetraso * this.PENALIZACION_POR_DIA);

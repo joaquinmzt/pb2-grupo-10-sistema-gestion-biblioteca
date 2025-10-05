@@ -381,4 +381,29 @@ public class BibliotecaTest {
 		
 		assertEquals(valorDeseado, valorObtenido);
 	}
+	
+	@Test
+	public void dadoQueExisteUnSocioConUnLibroPrestadoLaFechaDeDevolucionNoPuedeSerAnteriorALaDelPrestamo() {
+		String nombre = "Maria";
+		Integer dni = 11222333;
+		Persona socioPleno = new Persona(nombre, dni, planPleno);
+
+		biblioteca.agregarSocio(socioPleno);
+
+		String titulo = "Hellboy";
+		TipoDeLibro tipo = TipoDeLibro.COMIC;
+		Integer stock = 5;
+		Libro libro = new Libro(titulo, tipo, stock);
+
+		biblioteca.agregarLibro(libro);
+
+		LocalDate fechaDePrestamo = LocalDate.of(2025, 10, 1);
+		Prestamo prestamo = new Prestamo(socioPleno, libro, fechaDePrestamo);
+		biblioteca.prestarLibro(prestamo);
+		
+		LocalDate fechaDeDevolucion = LocalDate.of(2025, 9, 30);
+		
+		assertFalse(biblioteca.devolverLibro(prestamo, fechaDeDevolucion));
+		
+	}
 }
