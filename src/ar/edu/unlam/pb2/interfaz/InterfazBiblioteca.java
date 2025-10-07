@@ -158,7 +158,7 @@ public class InterfazBiblioteca {
 					mostrarPorPantalla("La fecha de devolucion no puede ser anterior a la fecha en la que se presto el libro");
 				}
 			} else {
-				mostrarPorPantalla("No se pudo encontrar ese prestamo");
+				mostrarPorPantalla("El prestamo no pudo ser encontrado!");
 			}
 			
 		} else {
