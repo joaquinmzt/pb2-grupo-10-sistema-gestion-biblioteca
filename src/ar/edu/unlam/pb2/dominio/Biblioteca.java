@@ -75,13 +75,13 @@ public class Biblioteca {
 		return null;
 	}
 
-	public Boolean prestarLibro(Prestamo p) {
-		if (p.getLibro().getStock() != 0
-				&& p.getSocio().getLibros().size() < p.getSocio().getPlan().getCantidadMaximaDeLibrosSimultaneos()) {
-			p.getSocio().getLibros().add(p.getLibro());
-			p.getLibro().setStock(p.getLibro().getStock() - 1);
-			p.getSocio().setContadorPrestamos(p.getSocio().getContadorPrestamos() + 1);
-			return this.prestamos.add(p);
+	public Boolean prestarLibro(Prestamo prestamo) {
+		if (prestamo.getLibro().getStock() != 0
+				&& prestamo.getSocio().getLibros().size() < prestamo.getSocio().getPlan().getCantidadMaximaDeLibrosSimultaneos()) {
+			prestamo.getSocio().getLibros().add(prestamo.getLibro());
+			prestamo.getLibro().setStock(prestamo.getLibro().getStock() - 1);
+			prestamo.getSocio().setContadorPrestamos(prestamo.getSocio().getContadorPrestamos() + 1);
+			return this.prestamos.add(prestamo);
 		}
 		return false;
 	}

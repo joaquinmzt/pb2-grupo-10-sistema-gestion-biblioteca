@@ -13,8 +13,8 @@ public class PlanPleno extends Plan implements ICalculable{
 	}
 
 	@Override
-	public Double calcularCuota(Persona p) {
-		if(p.getContadorPrestamos() >= 5) {
+	public Double calcularCuota(Persona persona) {
+		if(persona.getContadorPrestamos() >= 5) {
 			return this.getPrecioBase() * 0.85;
 		}
 		return this.getPrecioBase();
