@@ -159,6 +159,7 @@ public class InterfazBiblioteca {
 				}
 			} else {
 				mostrarPorPantalla("No se pudo encontrar ese prestamo!");
+
 			}
 			
 		} else {
